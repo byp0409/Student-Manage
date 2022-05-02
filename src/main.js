@@ -1,12 +1,23 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
+import Vue from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store';
+// 引入第三方库
+import '@/plugins/element-ui.js';
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+
+// 测试接口
+// import { login, reqAllUserInfo } from '@/api';
+// console.log(login({ Sno: 'byp0409', password: '123456' }));
+// console.log(reqAllUserInfo());
 
 new Vue({
   router,
   store,
-  render: h => h(App)
-}).$mount('#app')
+  render: h => h(App),
+  beforeCreate() {
+    // 全局事件总线
+    Vue.prototype.$bus = this;
+  },
+}).$mount('#app');
