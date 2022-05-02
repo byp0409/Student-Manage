@@ -7,7 +7,16 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "axios": "^0.27.2",
+    "body-parser": "^1.20.0",
     "core-js": "^3.8.3",
+    "element-ui": "^2.15.8",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
+    "less": "^4.1.2",
+    "less-loader": "^10.2.0",
+    "mysql": "^2.18.1",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2"
@@ -17,6 +26,8 @@
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "babel-plugin-component": "^1.1.1",
+    "nodemon": "^2.0.16",
     "vue-template-compiler": "^2.6.14"
   }
 }
