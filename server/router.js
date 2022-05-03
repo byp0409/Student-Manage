@@ -61,16 +61,15 @@ router.post('/login', (req, res) => {
   });
 });
 
-// 修改密码
-// 用户身份校验？？
+// 修改密码  用户身份后端校验？？
 router.get('/modify/password', (req, res) => {
-  let { Sno, newpassword } = req.query;
-  let arr = [newpassword, Sno];
+  let { Sno, newpassword, password } = req.query;
+  let arr = [newpassword, Sno, password];
   // 选出该用户
-  let sql = 'UPDATE account SET password= ? WHERE Sno=?';
+  let sql = 'UPDATE account SET password= ? WHERE Sno=? AND password=?';
   sqlFn(sql, arr, result => {
     // affectedRows修改的行数
-    console.log(result);
+    // console.log(result);
     if (result.affectedRows > 0) {
       res.send({
         status: 200,
@@ -175,6 +174,111 @@ router.get('/modify/userinfo', (req, res) => {
       res.send({
         status: 204,
         msg: '修改失败',
+      });
+    }
+  });
+});
+
+// 发布任务
+router.get('/releasetask', (req, res) => {
+  let { Tname } = req.query;
+  let sql = 'INSERT INTO task (Tname) VALUES (?);SELECT time FROM task WHERE Tname=?;';
+  let arr = [Tname, Tname];
+  if (Tname == '') {
+    res.send({
+      status: 400,
+      msg: '不能发布空任务',
+    });
+  } else {
+    sqlFn(sql, arr, result => {
+      if (result[0].affectedRows > 0) {
+        res.send({
+          status: 200,
+          msg: '添加成功',
+        });
+      } else {
+        res.send({
+          status: 204,
+          msg: '添加失败',
+        });
+      }
+    });
+  }
+});
+
+// 获取任务
+router.get('/gettask', (req, res) => {
+  // 获取任务和学生总数量，计算用于计算百分比
+  let sql = 'SELECT * FROM task ORDER BY tid desc;SELECT COUNT(*) FROM userinfo;';
+  sqlFn(sql, null, result => {
+    // 用户总数
+    let usertotal = result[result.length - 1][0]['COUNT(*)'];
+    // 所有任务
+    let alltask = result[0];
+    if (result.length > 0) {
+      res.send({
+        status: 200,
+        usertotal,
+        alltask,
+      });
+    } else {
+      res.send({
+        status: 204,
+        msg: '查询失败',
+      });
+    }
+  });
+});
+
+// 删除任务
+router.delete('/deletetask', (req, res) => {
+  let { tid } = req.body;
+  let arr = [tid];
+  sql = 'DELETE FROM task WHERE tid=?;';
+  sqlFn(sql, arr, result => {
+    console.log(result);
+    if (result.affectedRows > 0) {
+      res.send({
+        status: 200,
+        msg: '删除成功',
+      });
+    } else {
+      res.send({
+        status: 204,
+        msg: '为查询到数据',
+      });
+    }
+  });
+});
+
+// 标记完成,更新完成度
+router.post('/updatecomplete', (req, res) => {
+  // 学号，姓名，任务id
+  let { Sno, Sname, tid } = req.body;
+  // 查询出旧的完成度
+  let arr1 = [tid];
+  let sql1 = 'SELECT complete FROM task WHERE tid=?';
+  sqlFn(sql1, arr1, result => {
+    if (result.length > 0) {
+      // 更新完成度
+      let userinfo = { Sno, Sname };
+      if (result[0].complete == null) {
+        // 如果为空，进行初始化并插入第一条数据
+        result[0].complete = [];
+        result[0].complete.push(userinfo);
+      } else {
+        result[0].complete.push(userinfo);
+        // console.log(arr2);
+      }
+
+      // 写更新语句  tid   更新后的数据
+      // let arr2 = result[0].push(userinfo);
+
+      let sql2 = '';
+    } else {
+      res.send({
+        status: 204,
+        msg: '查询数据不存在',
       });
     }
   });
