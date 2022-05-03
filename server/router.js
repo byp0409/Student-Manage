@@ -261,19 +261,18 @@ router.post('/updatecomplete', (req, res) => {
   sqlFn(sql1, arr1, result => {
     if (result.length > 0) {
       // 更新完成度
+      let arr2 = result[0].complete;
       let userinfo = { Sno, Sname };
       if (result[0].complete == null) {
         // 如果为空，进行初始化并插入第一条数据
-        result[0].complete = [];
-        result[0].complete.push(userinfo);
+        arr2 = [];
+        arr2.push(userinfo);
       } else {
-        result[0].complete.push(userinfo);
+        arr2.push(userinfo);
         // console.log(arr2);
       }
 
       // 写更新语句  tid   更新后的数据
-      // let arr2 = result[0].push(userinfo);
-
       let sql2 = '';
     } else {
       res.send({
