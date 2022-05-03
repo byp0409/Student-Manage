@@ -10,16 +10,17 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">
-            删除
-          </el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
+    <!-- 弹窗 -->
+    <Dialog ref="dialog" />
   </div>
 </template>
 
 <script>
+import Dialog from '@/components/Dialog/Dialog.vue';
 import { mapState } from 'vuex';
 export default {
   name: 'StudentInfo',
@@ -30,10 +31,14 @@ export default {
   },
   methods: {
     handleEdit(index, row) {
-      console.log(index, row);
+      //  展示弹窗
+      this.$refs.dialog.centerDialogVisible = true;
+      this.$refs.dialog.tableData = row;
+
+      // console.log(index, row);
     },
     // 删除
-    handleDelete(index, row) {
+    handleDelete(row) {
       // console.log(index, row);
       let Sno = row.Sno;
       this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
@@ -88,6 +93,9 @@ export default {
   mounted() {
     // 请求表格数据
     this.reqinfo();
+  },
+  components: {
+    Dialog,
   },
 };
 </script>

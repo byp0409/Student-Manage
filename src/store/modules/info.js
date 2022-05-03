@@ -1,4 +1,4 @@
-import { reqAllUserInfo, deleteInfo } from '@/api';
+import { reqAllUserInfo, deleteInfo, updateInfo, reqPersonInfo } from '@/api';
 export default {
   namespaced: true,
   actions: {
@@ -18,13 +18,37 @@ export default {
         return Promise.reject(new Error('删除失败'));
       }
     },
+    // 更新学生信息
+    async updateInfo({ commit }, params) {
+      let result = await updateInfo(params);
+      if (result.data.status == 200) {
+        return '修改成功';
+      } else {
+        return Promise.reject(new Error('修改失败'));
+      }
+    },
+    // 个人信息
+    async reqPersonInfo({ commit }, data) {
+      let params = { Sno: data };
+      let result = await reqPersonInfo(params);
+      if (result.data.status == 200) {
+        commit('REQPERSONINFO', result.data.result[0]);
+        return 'ok';
+      } else {
+        return Promise.reject(new Error('请求个人信息失败'));
+      }
+    },
   },
   mutations: {
     REQINFO(state, info) {
       state.info = info;
     },
+    REQPERSONINFO(state, pinfo) {
+      state.pinfo = pinfo;
+    },
   },
   state: {
     info: [],
+    pinfo: {},
   },
 };

@@ -6,4 +6,5 @@
 
 <style>
 @import url('@/assets/css/normalize.css');
+@import url('@/assets/css/iconfont.css');
 </style>

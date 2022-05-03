@@ -54,7 +54,7 @@ export default {
         if (valid) {
           // 整理数据
           let data = { Sno: this.ruleForm.Sno, password: this.ruleForm.password };
-          // console.log(data);
+          // 请求登录
           this.$store.dispatch('login/login', data).then(
             value => {
               this.$message({
@@ -62,7 +62,9 @@ export default {
                 type: 'success',
                 center: 'true',
               });
-              this.$router.replace({ path: '/home/homePage' });
+              // 请求用户个人信息
+              this.$store.dispatch('info/reqPersonInfo', data.Sno);
+              this.$router.replace({ path: '/home/homepage' });
             },
             error => {
               this.$message({

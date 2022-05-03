@@ -22,6 +22,14 @@
             <i class="el-icon-info"></i>
             <span slot="title">学生信息</span>
           </el-menu-item>
+          <el-menu-item index="/home/register">
+            <i class="el-icon-circle-plus"></i>
+            <span slot="title">注册账户</span>
+          </el-menu-item>
+          <el-menu-item index="/home/myInfo">
+            <i class="el-icon-user-solid"></i>
+            <span slot="title">个人中心</span>
+          </el-menu-item>
         </el-menu>
       </el-col>
     </el-row>

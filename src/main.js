@@ -4,7 +4,7 @@ import router from './router';
 import store from './store';
 // 引入第三方库
 import '@/plugins/element-ui.js';
-
+import * as API from '@/api';
 Vue.config.productionTip = false;
 
 // 测试接口
@@ -18,6 +18,7 @@ new Vue({
   render: h => h(App),
   beforeCreate() {
     // 全局事件总线
+    Vue.prototype.$API = API;
     Vue.prototype.$bus = this;
   },
 }).$mount('#app');
