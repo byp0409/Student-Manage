@@ -1,5 +1,6 @@
 const { defineConfig } = require('@vue/cli-service');
 module.exports = defineConfig({
+  lintOnSave: false,
   transpileDependencies: true,
   // 配置代理服务器
   devServer: {
