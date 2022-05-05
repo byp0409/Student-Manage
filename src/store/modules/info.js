@@ -1,4 +1,4 @@
-import { reqAllUserInfo, deleteInfo, updateInfo, reqPersonInfo } from '@/api';
+import { reqAllUserInfo, deleteInfo, updateInfo, reqPersonInfo, getstuK } from '@/api';
 export default {
   namespaced: true,
   actions: {
@@ -36,6 +36,15 @@ export default {
         return 'ok';
       } else {
         return Promise.reject(new Error('请求个人信息失败'));
+      }
+    },
+    // 知识点掌握情况
+    async getstuK({ commit }, params) {
+      let result = await getstuK(params);
+      if (result.data.status == 200 && result.data.stuscase !== null) {
+        return result.data.stuscase;
+      } else {
+        return Promise.reject(new Error('暂无数据'));
       }
     },
   },

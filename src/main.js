@@ -6,6 +6,8 @@ import store from './store';
 import '@/plugins/element-ui.js';
 import * as API from '@/api';
 Vue.config.productionTip = false;
+import echarts from '@/plugins/echarts';
+Vue.use(echarts);
 
 // 测试接口
 // import { login, reqAllUserInfo } from '@/api';

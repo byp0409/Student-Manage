@@ -2,7 +2,7 @@ export default [
   // 重定向
   {
     path: '*',
-    redirect: '/login',
+    redirect: '/home/homepage',
   },
   // 一级路由
   {
@@ -38,6 +38,12 @@ export default [
         name: 'myInfo',
         path: 'myInfo',
         component: () => import('@/views/Home/RightContent/MyInfo/MyInfo'),
+      },
+      {
+        // 雷达图
+        name: 'radarmap',
+        path: 'radarmap',
+        component: () => import('@/views/Home/RightContent/StudentInfo/RadarMap/RadarMap'),
       },
     ],
   },

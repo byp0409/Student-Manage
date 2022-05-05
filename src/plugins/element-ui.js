@@ -81,7 +81,9 @@ import {
   Empty,
   Descriptions,
   DescriptionsItem,
+  Popconfirm,
 } from 'element-ui';
+Vue.use(Popconfirm);
 Vue.use(DescriptionsItem);
 Vue.use(Descriptions);
 Vue.use(Pagination);

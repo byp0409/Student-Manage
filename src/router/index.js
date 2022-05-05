@@ -13,4 +13,22 @@ const router = new VueRouter({
   },
 });
 
+router.beforeEach((to, from, next) => {
+  let token = localStorage.getItem('stx_TOKEN');
+  if (token) {
+    // 登录后禁止到登录页面
+    if (to.path === '/login') {
+      next(from.path);
+    } else {
+      next();
+    }
+  } else {
+    // 没有token跳转到login
+    if (to.path === '/login') {
+      next();
+    } else {
+      next('/login');
+    }
+  }
+});
 export default router;

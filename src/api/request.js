@@ -1,5 +1,7 @@
 import axios from 'axios';
-
+// 引入加载进度条
+import nprogress from 'nprogress';
+import 'nprogress/nprogress.css';
 const request = axios.create({
   baseURL: '/api',
   timeout: 5000,
@@ -7,6 +9,7 @@ const request = axios.create({
 
 request.interceptors.request.use(
   config => {
+    nprogress.start();
     return config;
   },
   error => {
@@ -16,6 +19,7 @@ request.interceptors.request.use(
 
 request.interceptors.response.use(
   config => {
+    nprogress.done();
     return config;
   },
   error => {

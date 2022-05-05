@@ -32,10 +32,10 @@ export default {
 .rightContent {
   margin-left: 200px;
   background-color: #f5f4f6;
-  transition: margin-left 0.2s ease-in;
+  transition: margin-left 0.25s ease-in;
 }
 .active {
   margin-left: 64px;
-  transition: margin-left 0.2s ease-in;
+  transition: margin-left 0.25s ease-in;
 }
 </style>

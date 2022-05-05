@@ -12,17 +12,17 @@
           :collapse="iscollapse"
         >
           <el-menu-item index="/xxxx" class="title">
-            <span>管理系统</span>
+            <span>学生管理系统</span>
           </el-menu-item>
           <el-menu-item index="/home/homepage">
             <i class="el-icon-s-home"></i>
             <span slot="title">主页</span>
           </el-menu-item>
-          <el-menu-item index="/home/studentInfo">
+          <el-menu-item index="/home/studentInfo" v-if="identity == 1">
             <i class="el-icon-info"></i>
             <span slot="title">学生信息</span>
           </el-menu-item>
-          <el-menu-item index="/home/register">
+          <el-menu-item index="/home/register" v-if="identity == 1">
             <i class="el-icon-circle-plus"></i>
             <span slot="title">注册账户</span>
           </el-menu-item>
@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { account, identity, token } from '@/util';
 export default {
   name: 'LeftNav',
   data() {
@@ -50,6 +51,11 @@ export default {
     this.$bus.$on('changeCollapse', value => {
       this.iscollapse = value;
     });
+  },
+  computed: {
+    identity() {
+      return identity(token('stx_TOKEN'));
+    },
   },
 };
 </script>

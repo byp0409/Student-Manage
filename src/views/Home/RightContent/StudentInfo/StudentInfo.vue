@@ -34,8 +34,6 @@ export default {
       //  展示弹窗
       this.$refs.dialog.centerDialogVisible = true;
       this.$refs.dialog.tableData = row;
-
-      // console.log(index, row);
     },
     // 删除
     handleDelete(row) {
