@@ -84,13 +84,12 @@ router.get('/modify/password', (req, res) => {
   });
 });
 
-// 管理员注册账号
+// 管理员注册账号  校验用户名唯一性
 router.post('/register', (req, res) => {
   let { Sno, Sname, Ssex, Sage, Stel, identity } = req.body;
   let arr = [Sno, Sname, Ssex, Sage, Stel, Sno, identity];
-  // 执行多条语句需要开启multipleStatements   是否有最优解????
   let sql =
-    'INSERT INTO userinfo VALUES (NULL,?,?,?,?,?);INSERT INTO account (Sno,identity) VALUES (?,?)';
+    'INSERT INTO userinfo VALUES (NULL,?,?,?,?,?,NULL,NULL);INSERT INTO account (Sno,identity) VALUES (?,?)';
   sqlFn(
     sql,
     arr,
@@ -130,7 +129,7 @@ router.get('/allUserInfo', (req, res) => {
   });
 });
 
-// 删除学生   多表删除？？
+// 删除学生
 router.delete('/deleteUser', (req, res) => {
   let Sno = req.body.Sno;
   let arr = [Sno, Sno];
@@ -236,7 +235,6 @@ router.delete('/deletetask', (req, res) => {
   let arr = [tid];
   sql = 'DELETE FROM task WHERE tid=?;';
   sqlFn(sql, arr, result => {
-    console.log(result);
     if (result.affectedRows > 0) {
       res.send({
         status: 200,
@@ -254,32 +252,132 @@ router.delete('/deletetask', (req, res) => {
 // 标记完成,更新完成度
 router.post('/updatecomplete', (req, res) => {
   // 学号，姓名，任务id
-  let { Sno, Sname, tid } = req.body;
-  // 查询出旧的完成度
-  let arr1 = [tid];
-  let sql1 = 'SELECT complete FROM task WHERE tid=?';
-  sqlFn(sql1, arr1, result => {
-    if (result.length > 0) {
-      // 更新完成度
-      let arr2 = result[0].complete;
-      let userinfo = { Sno, Sname };
-      if (result[0].complete == null) {
-        // 如果为空，进行初始化并插入第一条数据
-        arr2 = [];
-        arr2.push(userinfo);
-      } else {
-        arr2.push(userinfo);
-        // console.log(arr2);
-      }
-
-      // 写更新语句  tid   更新后的数据
-      let sql2 = '';
+  let { completes, tid } = req.body;
+  // 数组序列化
+  // let complete = JSON.stringify(completes);
+  arr = [completes, tid];
+  let sql = 'UPDATE task SET complete=? WHERE tid=?';
+  sqlFn(sql, arr, result => {
+    if (result.affectedRows > 0) {
+      res.send({
+        status: 200,
+        msg: '更新成功',
+      });
     } else {
       res.send({
         status: 204,
-        msg: '查询数据不存在',
+        msg: '更新失败',
       });
     }
   });
 });
+
+// 获取某任务的完成情况
+router.get('/getcomplete', (req, res) => {
+  let { tid } = req.query;
+  let arr = [tid];
+  let sql = 'SELECT complete FROM task WHERE tid=?';
+  sqlFn(sql, arr, result => {
+    if (result.length > 0) {
+      let string = result[0].complete;
+      if (string == null) {
+        res.send({
+          status: 204,
+          msg: '获取失败',
+        });
+      } else {
+        let complete = string.split('|');
+        res.send({
+          status: 200,
+          complete,
+        });
+      }
+    }
+  });
+});
+
+// 发布每周学习技术点
+router.post('/releaseknowledge', (req, res) => {
+  let { knowledge } = req.body;
+  let arr = [knowledge];
+  let sql = 'UPDATE userinfo SET Scase=?,Scase1=NULL';
+  sqlFn(sql, arr, result => {
+    if (result.affectedRows > 0) {
+      res.send({
+        status: 200,
+        msg: '发布成功',
+      });
+    } else {
+      res.send({
+        status: 204,
+        msg: '发布失败',
+      });
+    }
+  });
+});
+
+// 学生更新自己的学习情况
+router.get('/updateknowledge', (req, res) => {
+  let { Sno, Scase1 } = req.query;
+  let arr = [Scase1, Sno];
+  let sql = 'UPDATE userinfo SET Scase1=? WHERE Sno=?;';
+  sqlFn(sql, arr, result => {
+    if (result.affectedRows > 0) {
+      res.send({
+        status: 200,
+        msg: '更新成功',
+      });
+    } else {
+      res.send({
+        status: 204,
+        msg: '更新失败',
+      });
+    }
+  });
+});
+
+// 获取需要掌握的内容
+router.get('/getaknowledge', (req, res) => {
+  let { Sno } = req.query;
+  let arr = [Sno];
+  let sql = 'SELECT Scase FROM userinfo WHERE Sno=?';
+  sqlFn(sql, arr, result => {
+    if (result.length > 0) {
+      let Scase = result[0].Scase;
+      res.send({
+        status: 200,
+        Scase,
+      });
+    } else {
+      res.send({
+        status: 204,
+        msg: '暂无该学生信息',
+      });
+    }
+  });
+});
+
+//#region
+// 获取某个学生的学习情况   目前不用
+// router.get('/getstuknowledge', (req, res) => {
+//   let { Sno } = req.query;
+//   let arr = [Sno];
+//   let sql = 'SELECT Scase1 FROM userinfo WHERE Sno=?';
+//   sqlFn(sql, arr, result => {
+//     let stuscase = result[0].Scase1;
+//     if (result.length > 0 || result[0].Scase1 !== null) {
+//       res.send({
+//         status: 200,
+//         stuscase,
+//       });
+//     } else {
+//       res.send({
+//         status: 204,
+//         msg: '该学生尚未填写',
+//       });
+//     }
+//   });
+// });
+// #endregion
+
 module.exports = router;

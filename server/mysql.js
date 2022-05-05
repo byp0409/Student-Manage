@@ -10,6 +10,8 @@ const client = mysql.createConnection({
   port: '3306',
   // 允许同时执行多条sql语句
   multipleStatements: true,
+  // 配置时区
+  dateStrings: true,
 });
 //封装数据库操作语句 sql语句 参数数组arr，用在sql语句中的?占位符里  sucdess查询成功的回调  fail查询失败的回调
 function sqlFn(sql, arr, success, fail) {
