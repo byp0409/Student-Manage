@@ -357,27 +357,25 @@ router.get('/getaknowledge', (req, res) => {
   });
 });
 
-//#region
-// 获取某个学生的学习情况   目前不用
-// router.get('/getstuknowledge', (req, res) => {
-//   let { Sno } = req.query;
-//   let arr = [Sno];
-//   let sql = 'SELECT Scase1 FROM userinfo WHERE Sno=?';
-//   sqlFn(sql, arr, result => {
-//     let stuscase = result[0].Scase1;
-//     if (result.length > 0 || result[0].Scase1 !== null) {
-//       res.send({
-//         status: 200,
-//         stuscase,
-//       });
-//     } else {
-//       res.send({
-//         status: 204,
-//         msg: '该学生尚未填写',
-//       });
-//     }
-//   });
-// });
-// #endregion
+// 获取某个学生的学习情况   弃用
+router.get('/getstuknowledge', (req, res) => {
+  let { Sno } = req.query;
+  let arr = [Sno];
+  let sql = 'SELECT Scase1 FROM userinfo WHERE Sno=?';
+  sqlFn(sql, arr, result => {
+    let stuscase = result[0].Scase1;
+    if (result.length > 0 || result[0].Scase1 !== null) {
+      res.send({
+        status: 200,
+        stuscase,
+      });
+    } else {
+      res.send({
+        status: 204,
+        msg: '该学生尚未填写',
+      });
+    }
+  });
+});
 
 module.exports = router;

@@ -26,12 +26,14 @@ export default [
         name: 'studentInfo',
         path: 'studentInfo',
         component: () => import('@/views/Home/RightContent/StudentInfo/StudentInfo'),
+        meta: { power: 1 },
       },
       {
         // 注册学生
         name: 'register',
         path: 'register',
         component: () => import('@/views/Home/RightContent/Register/Register'),
+        meta: { power: 1 },
       },
       {
         // 个人中心
@@ -44,6 +46,7 @@ export default [
         name: 'radarmap',
         path: 'radarmap',
         component: () => import('@/views/Home/RightContent/StudentInfo/RadarMap/RadarMap'),
+        meta: { power: 1 },
       },
     ],
   },

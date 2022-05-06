@@ -1,5 +1,9 @@
 <template>
   <div class="myinfo">
+    <el-breadcrumb separator-class="el-icon-arrow-right" class="top">
+      <el-breadcrumb-item :to="{ path: '/home/homepage' }">主页</el-breadcrumb-item>
+      <el-breadcrumb-item>个人中心</el-breadcrumb-item>
+    </el-breadcrumb>
     <span class="title">个人信息</span>
     <el-descriptions class="margin-top" :column="3" border>
       <el-descriptions-item>
@@ -96,6 +100,9 @@ export default {
 <style lang="less" scoped>
 .myinfo {
   padding: 20px 15px;
+  .top {
+    margin-bottom: 17px;
+  }
   .title {
     font-size: 16px;
     font-weight: 700;

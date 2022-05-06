@@ -10,7 +10,24 @@ const install = function (Vue) {
     $Chart: {
       get() {
         return {
-          radar(id) {
+          radar(id, Sname, Scase, Scase1) {
+            // 整理数据
+            // 知识点名字  实现根据知识点个数动态渲染
+            let kname = Scase.split('|');
+            let indicator = [];
+            kname.forEach(item => {
+              // 对象要定义在里面，这样每次循环的对象都是新地址(一个全新的对象) ，定义在外面的话地址不变，导致数组中存放的数据都是都是最后一个
+              let temp = { name: '', max: 5 };
+              temp.name = item;
+              indicator.push(temp);
+            });
+            // 数值
+            let temp1 = Scase1.split('|').filter(item => item);
+            let value = [];
+            temp1.forEach(item => {
+              value.push(item.split(':')[1]);
+            });
+            /*  */
             var chartDom = document.getElementById(id);
             var myChart = echarts.init(chartDom);
             var option;
@@ -21,29 +38,55 @@ const install = function (Vue) {
               },
               legend: {
                 // 名字
-                data: ['Allocated Budget'],
+                data: [`${Sname}`],
               },
               radar: {
                 // shape: 'circle',
-                // 类目名
-                indicator: [
-                  { name: 'Sales', max: 5 },
-                  { name: 'Administration', max: 5 },
-                  { name: 'Information Technology', max: 5 },
-                  { name: 'Customer Support', max: 5 },
-                  { name: 'Development', max: 5 },
-                  { name: 'Marketing', max: 5 },
-                ],
+                // 类目名  简写
+                indicator,
+                splitArea: {
+                  areaStyle: {
+                    // 雷达图背景颜色  四层，一会个性化设置一下
+                    color: ['#fefefe', '#f6f8fc', '#fefefe', '#f6f8fc', '#fefefe'],
+                  },
+                },
+                // 雷达图外部文字描述样式
+                axisName: {
+                  color: '#333',
+
+                  fontSize: '15px',
+                },
               },
               series: [
                 {
-                  name: 'Budget vs spending',
+                  // 名字
+                  name: Sname,
                   type: 'radar',
+                  // 线条高亮
+                  emphasis: {
+                    lineStyle: {
+                      width: 4,
+                    },
+                  },
+                  // 雷达图上显示具体值
+                  label: {
+                    normal: {
+                      show: true,
+                      fontSize: '15px',
+                      formatter: function (params) {
+                        return params.value;
+                      },
+                    },
+                  },
                   // 分数
                   data: [
                     {
-                      value: [5, 5, 5, 5, 5, 5],
-                      name: 'Allocated Budget',
+                      value,
+                      name: Sname,
+                      areaStyle: {
+                        // 雷达图面积内的颜色
+                        color: 'rgba(255, 228, 52, 0.6)',
+                      },
                     },
                   ],
                 },

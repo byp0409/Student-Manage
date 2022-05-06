@@ -1,5 +1,9 @@
 <template>
   <div class="form">
+    <el-breadcrumb separator-class="el-icon-arrow-right" class="top">
+      <el-breadcrumb-item :to="{ path: '/home/homepage' }">注册</el-breadcrumb-item>
+      <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+    </el-breadcrumb>
     <el-form
       :model="ruleForm"
       :rules="rules"
@@ -116,5 +120,8 @@ export default {
 <style lang="less" scoped>
 .form {
   margin: 20px 15px;
+  .top {
+    margin-bottom: 14px;
+  }
 }
 </style>
