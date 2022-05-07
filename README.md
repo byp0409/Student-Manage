@@ -2,7 +2,9 @@
 
 ## 写在前面
 接口文档   https://console-docs.apipost.cn/preview/33afe756f2f552f5/151425855decd2d9
+
 GitHub    https://github.com/byp0409/Student-Manage
+
 我的其他项目
 - 丁香医生移动端仿写(已打包为app)    https://github.com/byp0409/Vue-DXYS
 - 商品管理系统(正在施工中)       https://github.com/byp0409/Vue-Commodity-Manage
@@ -22,18 +24,10 @@ npm i
 ```
 
 ### 数据库
-请在mysql中新建一个数据库，你会在文件夹里看到一个文件，请在该数据库中运行
-
-![image-20220507001248786](C:\Users\10245\AppData\Roaming\Typora\typora-user-images\image-20220507001248786.png)
+请在mysql中新建一个数据库，然后在该数据库中运行ms.sql文件
 
 ### 服务器连接配置
-在你安装好配置好数据库后，一定要检查mysql.js里的配置
-
-![image-20220507001158006](C:\Users\10245\AppData\Roaming\Typora\typora-user-images\image-20220507001158006.png)
-
-一定要保证配置和自己的情况相同
-
-![image-20220507002713222](C:\Users\10245\AppData\Roaming\Typora\typora-user-images\image-20220507002713222.png)
+在你安装好配置好数据库后，一定要检查mysql.js里的配置，要保证和自己的数据库配置相同
 
 ### 运行项目
 经过以上的准备你就可以正式运行项目了，默认提供一个管理员账户、一个普通用户
