@@ -6,7 +6,7 @@
 GitHub    https://github.com/byp0409/Student-Manage
 
 我的其他项目
-- 丁香医生移动端仿写(已打包为app)    https://github.com/byp0409/Vue-DXYS
+- 疫情简讯(已打包为app)    https://github.com/byp0409/Vue-epidemic_brief
 - 商品管理系统(正在施工中)       https://github.com/byp0409/Vue-Commodity-Manage
 
 ## 项目介绍
