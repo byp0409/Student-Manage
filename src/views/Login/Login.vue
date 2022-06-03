@@ -39,8 +39,8 @@ export default {
   data() {
     return {
       ruleForm: {
-        Sno: '',
-        password: '',
+        Sno: 'root',
+        password: 'admin',
       },
       rules: {
         Sno: [{ required: true, message: '请输入账号', trigger: 'change' }],

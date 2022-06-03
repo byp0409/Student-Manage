@@ -27,6 +27,7 @@
 
 <script>
 import Dialog from '@/components/Dialog/Dialog.vue';
+import { account, token } from '@/util';
 import { mapState } from 'vuex';
 export default {
   name: 'StudentInfo',
@@ -62,39 +63,49 @@ export default {
     handleDelete(row) {
       // console.log(index, row);
       let Sno = row.Sno;
-      this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-        center: true,
-      })
-        .then(() => {
-          this.$store.dispatch('info/deleteinfo', Sno).then(
-            value => {
-              this.$message({
-                type: 'success',
-                message: '删除成功!',
-                center: true,
-              });
-              // 更新页面
-              this.reqinfo();
-            },
-            error => {
-              this.$message({
-                type: 'error',
-                message: '删除失败!',
-                center: true,
-              });
-            }
-          );
-        })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除',
-            center: true,
-          });
+      let nowSno = account(token('stx_TOKEN'));
+      // 禁止删除当前登录的用户
+      if (Sno === nowSno) {
+        this.$message({
+          message: '禁止删除当前登录的用户',
+          type: 'warning',
+          center: 'true',
         });
+      } else {
+        this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true,
+        })
+          .then(() => {
+            this.$store.dispatch('info/deleteinfo', Sno).then(
+              value => {
+                this.$message({
+                  type: 'success',
+                  message: '删除成功!',
+                  center: true,
+                });
+                // 更新页面
+                this.reqinfo();
+              },
+              error => {
+                this.$message({
+                  type: 'error',
+                  message: '删除失败!',
+                  center: true,
+                });
+              }
+            );
+          })
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除',
+              center: true,
+            });
+          });
+      }
     },
     // 请求表格数据
     reqinfo() {
