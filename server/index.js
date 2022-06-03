@@ -10,4 +10,4 @@ app.use(bodyParser.urlencoded({ extended: true })); // parse application/x-www-f
 
 app.use('/api', router);
 
-app.listen(8090, () => console.log('服务器运行在==>http://127.0.0.1:8090'));
+app.listen(9090, () => console.log('服务器运行在==>http://127.0.0.1:9090'));
